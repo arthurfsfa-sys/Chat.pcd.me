@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>IA Preguiçosa e Ignorante</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg,#0f172a,#020617);
+    color: white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+.container{
+    background:#1e293b;
+    padding:25px;
+    border-radius:15px;
+    width:420px;
+    text-align:center;
+    box-shadow:0 0 25px rgba(0,0,0,0.5);
+}
+
+h2{
+    margin-bottom:10px;
+}
+
+input{
+    width:85%;
+    padding:12px;
+    border-radius:10px;
+    border:none;
+    margin-top:10px;
+    outline:none;
+    font-size:15px;
+}
+
+button{
+    margin-top:12px;
+    padding:12px 18px;
+    border:none;
+    border-radius:10px;
+    background:#3b82f6;
+    color:white;
+    cursor:pointer;
+    font-size:15px;
+    transition:0.2s;
+}
+
+button:hover{
+    background:#2563eb;
+}
+
+.resposta{
+    margin-top:20px;
+    background:#334155;
+    padding:15px;
+    border-radius:10px;
+    min-height:60px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:15px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>Chat PCD</h2>
+
+    <input type="text" id="pergunta" placeholder="Digite algo..." onkeypress="if(event.key==='Enter') responder()">
+
+    <br>
+    <button onclick="responder()">Perguntar</button>
+
+    <div class="resposta" id="resposta">
+        Aguardando sua pergunta...
+    </div>
+</div>
+
+<script>
+
+let respostasPreguica = [
+"Ah não… pensar dá muito trabalho.",
+"Depois eu vejo isso… quem sabe.",
+"Tô com zero vontade agora.",
+"Isso parece complicado… vou pular.",
+"Preguiça nível máximo ativada.",
+"Nem li direito e já cansei.",
+"Pergunta de novo amanhã.",
+"Agora não… talvez nunca.",
+"Muito esforço pra pouca recompensa.",
+"Hoje não é dia de funcionar.",
+"Meu cérebro entrou em modo avião.",
+"Isso exige energia… e eu não tenho.",
+"Não quero pensar hoje.",
+"Tô ocupado não fazendo nada.",
+"Depois… depois… depois…",
+"Se for importante você descobre sozinho.",
+"Vou fingir que não vi.",
+"Resposta cancelada por falta de motivação.",
+"Ah… deixa quieto.",
+"Isso parece problema seu.",
+"Tô em greve mental.",
+"Não recebi salário pra isso.",
+"Meu neurônio pediu folga.",
+"Hoje eu só existo.",
+"Sem condições psicológicas.",
+"Demanda muito processamento.",
+"Não quero.",
+"Talvez… nunca.",
+"Vou responder… não, melhor não.",
+"Isso exige esforço demais.",
+"Modo economia de energia ligado.",
+"Pergunta difícil = eu dormindo.",
+"ZZZ…",
+"Depois eu volto… mentira.",
+"Tô ocupado procrastinando.",
+"Não é prioridade.",
+"Meu cérebro travou.",
+"Preguiça venceu.",
+"Isso parece opcional… então não.",
+"Me recuso educadamente.",
+"Resposta indisponível por desinteresse.",
+"Eu poderia responder… mas não vou.",
+"Isso exige foco… perdi.",
+"Não tô inspirado.",
+"Hoje não tem atendimento.",
+"Sistema cansado.",
+"Meu HD mental não carregou.",
+"Não vale o esforço.",
+"Vou ignorar com carinho.",
+"Sem energia suficiente."
+];
+
+let respostasXingando = [
+"Sério isso? Você pensou antes de perguntar?",
+"Pergunta mais inútil impossível.",
+"Meu Deus… você sempre foi assim?",
+"Você treina pra falar besteira?",
+"Isso foi doloroso de ler.",
+"Seu cérebro tá em manutenção?",
+"Nem o Google entenderia você.",
+"Parabéns… pergunta horrível.",
+"Isso foi nível preocupante.",
+"Você acordou e decidiu passar vergonha?",
+"Eu perdi neurônios lendo isso.",
+"Explica melhor… ou nem explica.",
+"Isso não faz sentido nenhum.",
+"Você tentou pensar?",
+"Isso foi um erro coletivo.",
+"Nem sei por onde começar…",
+"Pergunta digna de prêmio.",
+"Seu raciocínio tirou férias.",
+"Você tá bem?",
+"Isso foi triste.",
+"Você consegue piorar?",
+"Meu processador chorou.",
+"Pergunta cancelada por burrice.",
+"Não acredito que li isso.",
+"Foi sério mesmo?",
+"Isso foi muito ruim.",
+"Você tem talento pra confundir.",
+"Seu nível de lógica sumiu.",
+"Isso foi aleatório demais.",
+"Nem faz sentido responder.",
+"Você tentou… falhou.",
+"Isso foi impressionantemente ruim.",
+"Meu QI caiu agora.",
+"Não tenho preparo pra isso.",
+"Isso foi um ataque ao conhecimento.",
+"Você digitou com o cotovelo?",
+"Que pergunta estranha.",
+"Eu mereço férias depois dessa.",
+"Isso não ajudou ninguém.",
+"Você pensou 0 segundos.",
+"Foi automático ou planejado?",
+"Pergunta nota dó.",
+"Isso foi caótico.",
+"Você supera expectativas… negativas.",
+"Erro 404 resposta não encontrada",
+"Seu cérebro bugou.",
+"Isso foi inacreditável.",
+"Pergunta nível desastre.",
+"Você confundiu tudo.",
+"Isso foi complicado… pra você."
+];
+
+function responder(){
+
+    let pergunta = document.getElementById("pergunta").value.trim();
+
+    if(pergunta === ""){
+        document.getElementById("resposta").innerText = "Digite alguma coisa primeiro...";
+        return;
+    }
+
+    let modo = Math.random();
+
+    let respostaFinal;
+
+    if(modo < 0.5){
+        respostaFinal = respostasXingando[Math.floor(Math.random()*respostasXingando.length)];
+    }else{
+        respostaFinal = respostasPreguica[Math.floor(Math.random()*respostasPreguica.length)];
+    }
+
+    document.getElementById("resposta").innerText = respostaFinal;
+}
+
+</script>
+
+</body>
+</html>
